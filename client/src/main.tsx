@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminHome from "./pages/AdminPanel";
+import AdminUsersPage from "./pages/AdminUsers";
 
 ReactDOM.render(
   <Router>
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/home" element={<AdminHome />} />
+      <Route path="/admin/users" element={<AdminUsersPage />} />
     </Routes>
   </Router>,
   document.getElementById("root")

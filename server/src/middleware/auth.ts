@@ -61,7 +61,7 @@ export const isUser = async (req: Request, res: Response, next: NextFunction) =>
 /**
  * Middleware to authenticate and ensure only admins can access specific routes.
  */
-export const authenticateAdmin = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticateAdmin = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   const token = req.cookies.jwt;
 
   if (!token) {
@@ -69,20 +69,15 @@ export const authenticateAdmin = async (req: Request, res: Response, next: NextF
   }
 
   try {
-    // Verify token and decode payload
     const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { id: string; role: string };
 
-    // Fetch the user from the database
     const user = await User.findById(decoded.id);
-
     if (!user || user.role !== 'admin') {
       return res.status(403).json({ message: 'Admin access required.' });
     }
 
-    // Attach the user to the request object
-    (req as any).admin = user;
-
-    next();
+    (req as any).user = user;
+    next();  // Proceed to the next middleware or route handler
   } catch (error) {
     res.status(400).json({ message: 'Invalid or expired token.' });
   }

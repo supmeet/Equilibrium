@@ -36,21 +36,15 @@ const connectDB = () => {
   
 
 // Routes placeholder
-app.get('/', (req, res) => {
-  res.send('Equilibrium API');
-});
+app.get('/', (req, res) => {res.send('Equilibrium API');});
 
 app.use('/api/admin', adminRoutes); 
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
 
 const startServer = async () => {
     try {
       connectDB();
       // await createAdmin();
-      app.listen(8080, () => console.log("Server started on port 8080"));
+      app.listen(PORT, () => {console.log(`Server running on http://localhost:${PORT}`);});
     } catch (error) {
       console.log(error);
     }
