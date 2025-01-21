@@ -31,7 +31,7 @@ export const adminLogin = async (req: Request, res: Response): Promise<any> => {
     });
 
     // Set cookie
-    res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    res.cookie('jwt', token, { httpOnly: true, secure: false, sameSite: true, maxAge: 3600000 });
 
     // Return response
     res.json({
@@ -80,15 +80,16 @@ export const createUser = async (req: Request, res: Response) => {
       firstName,
       lastName,
       email,
-      hashedPassword, // Add bcrypt encryption logic here if needed
+      password: hashedPassword, 
       role: isAdmin ? 'admin' : 'user',
       isVerified: true,
     });
-
+    console.log("New User Details",newUser);
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json({ message: "Error creating user" });
+    console.log("Error",error);
+    res.status(500).json({ message: "Error creating user", error: error });
   }
 };
 
@@ -106,9 +107,10 @@ export const updateUser = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password, isAdmin } = req.body;
 
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { firstName, lastName, email, password, role: isAdmin ? 'admin' : 'user' },
+      { firstName, lastName, email, password: hashedPassword, role: isAdmin ? 'admin' : 'user' },
       { new: true }
     );
     res.json(updatedUser);

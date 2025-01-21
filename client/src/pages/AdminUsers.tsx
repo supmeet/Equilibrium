@@ -37,7 +37,7 @@ const AdminUsersPage: React.FC = () => {
     try {
       if (isEditing) {
         await axios.put(
-          `${apiUrl}/users/${userId}`,
+          `${apiUrl}/admin/user/${userId}`,
           {
             firstName,
             lastName,
@@ -49,7 +49,7 @@ const AdminUsersPage: React.FC = () => {
         );
       } else {
         await axios.post(
-          `${apiUrl}/users/create`,
+          `${apiUrl}/admin/user/create`,
           {
             firstName,
             lastName,
@@ -82,7 +82,7 @@ const AdminUsersPage: React.FC = () => {
   const handleDelete = async (userId: string) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`${apiUrl}/users/${userId}`, {
+        await axios.delete(`${apiUrl}/admin/user/${userId}`, {
           withCredentials: true,
         });
         fetchUsers();

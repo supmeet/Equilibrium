@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { createAdmin } from './scripts/createAdmin'; 
 import adminRoutes from './routes/adminRoutes';
+import userAuthRoutes from './routes/userAuthRoutes';
 import cors from 'cors';
-
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(cors({
   credentials: true  // Allow cookies to be sent with the request
 }));
 
+app.use(cookieParser());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
@@ -39,6 +41,7 @@ const connectDB = () => {
 app.get('/', (req, res) => {res.send('Equilibrium API');});
 
 app.use('/api/admin', adminRoutes); 
+app.use('/api/user', userAuthRoutes); 
 
 const startServer = async () => {
     try {

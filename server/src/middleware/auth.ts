@@ -62,8 +62,7 @@ export const isUser = async (req: Request, res: Response, next: NextFunction) =>
  * Middleware to authenticate and ensure only admins can access specific routes.
  */
 export const authenticateAdmin = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const token = req.cookies.jwt;
-
+  const token = req.cookies.jwt
   if (!token) {
     return res.status(401).json({ message: 'Admin access denied. No token provided.' });
   }

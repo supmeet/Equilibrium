@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminHome from "./pages/AdminPanel";
 import AdminUsersPage from "./pages/AdminUsers";
+import Signup from "./pages/SignUp";
+import VerifyEmail from "./pages/VerifyEmail";
 
 ReactDOM.render(
   <Router>
@@ -17,6 +19,8 @@ ReactDOM.render(
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/home" element={<AdminHome />} />
       <Route path="/admin/users" element={<AdminUsersPage />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
     </Routes>
   </Router>,
   document.getElementById("root")

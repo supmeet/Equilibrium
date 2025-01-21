@@ -20,8 +20,8 @@ const AdminLogin: React.FC = () => {
       );
       if (res.data.token) {
         localStorage.setItem("adminDetails", JSON.stringify(res.data.user));
-        document.cookie = `jwt=${res.data.token}`;
-        alert("Admin login successful!");
+        // document.cookie = `jwt=${res.data.token}`;
+        // alert("Admin login successful!");
         window.location.href = "/admin/home";
       }
     } catch (error) {
