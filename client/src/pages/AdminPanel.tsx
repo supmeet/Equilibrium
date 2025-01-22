@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const AdminHome: React.FC = () => {
+  const location = useLocation();
+  const { user } = location.state || {};
+  const navigate = useNavigate();
+
   const [adminDetails, setAdminDetails] = useState<{
     firstName: string;
     lastName: string;
@@ -13,9 +19,10 @@ const AdminHome: React.FC = () => {
 
   useEffect(() => {
     // Retrieve admin details from localStorage
-    const storedDetails = localStorage.getItem("adminDetails");
-    if (storedDetails) {
-      setAdminDetails(JSON.parse(storedDetails));
+
+    // const storedDetails = localStorage.getItem("adminDetails");
+    if (user) {
+      setAdminDetails(user);
     } else {
       window.location.href = "/admin/login"; // Redirect if not logged in
     }
@@ -33,7 +40,7 @@ const AdminHome: React.FC = () => {
   }, []);
 
   const handleMasterClick = (master: string) => {
-    window.location.href = `/admin/${master}`;
+    navigate(`/admin/${master}`, { state: { user: adminDetails } });
   };
 
   return (

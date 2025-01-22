@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,10 +21,11 @@ const AdminLogin: React.FC = () => {
         { withCredentials: true }
       );
       if (res.data.token) {
-        localStorage.setItem("adminDetails", JSON.stringify(res.data.user));
+        // localStorage.setItem("adminDetails", JSON.stringify(res.data.user));
         // document.cookie = `jwt=${res.data.token}`;
         // alert("Admin login successful!");
-        window.location.href = "/admin/home";
+        navigate("/admin/home", { state: { user: res.data.user } });
+        // window.location.href = "/admin/home";
       }
     } catch (error) {
       alert("Admin login failed.");

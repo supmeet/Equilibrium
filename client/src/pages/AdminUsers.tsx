@@ -1,10 +1,16 @@
 // AdminUsersPage.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const AdminUsersPage: React.FC = () => {
+  const location = useLocation();
+  const { user } = location.state || {};
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState([]);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -17,6 +23,9 @@ const AdminUsersPage: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    if (!user) {
+      window.location.href = "/admin/login"; // Redirect if not logged in
+    }
     fetchUsers();
   }, []);
 
