@@ -5,7 +5,7 @@ import User from '../models/User';
 /**
  * Middleware to verify JWT and attach the authenticated user to the request object.
  */
-export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = async (req: Request, res: Response, next: NextFunction) : Promise<any> => {
   const token = req.cookies.jwt;
 
   if (!token) {

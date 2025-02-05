@@ -22,7 +22,7 @@ const Login = () => {
       });
 
       alert(response.data.message);
-      navigate("/home"); // Redirect to the user's home page after login
+      navigate("/"); // Redirect to the user's home page after login
     } catch (error: any) {
       if (error.response?.status === 403) {
         // If email is not verified, redirect to verification page
